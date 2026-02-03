@@ -4,63 +4,50 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex flex-col">
-      
-      {/* ================= HEADER ================= */}
-      {/* <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-extrabold text-green-700 tracking-tight">
-            Aarogya Harvest
-          </h1>
-          <button
-            onClick={() => navigate("/my-subscription")}
-            className="text-sm font-semibold text-green-700 hover:text-green-900"
-          >
-            My Subscription
-          </button>
-        </div>
-      </header> */}
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex flex-col overflow-hidden">
 
       {/* ================= HERO ================= */}
       <section className="flex-1 flex items-center">
-        <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
-          
-          {/* Left Content */}
+        <div className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-14 items-center">
+
+          {/* LEFT CONTENT */}
           <div>
-            <span className="inline-block mb-4 px-4 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded-full">
+            <span className="inline-block mb-5 px-5 py-1.5 text-sm font-semibold text-green-700 bg-green-100 rounded-full">
               Daily Fruit Subscription 🍎
             </span>
 
-            <h2 className="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
+            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
               Fresh Fruit Bowls,
               <br />
-              <span className="text-green-600">Delivered Every Morning</span>
-            </h2>
+              <span className="text-green-600">
+                Delivered Every Morning
+              </span>
+            </h1>
 
             <p className="mt-6 text-lg text-gray-600 max-w-xl">
               Hand-cut fresh fruits prepared every morning and delivered before
-              <strong> 8:30 AM</strong>.  
-              No daily ordering. No compromises. Just clean, healthy habits.
+              <strong> 8:30 AM</strong>. No daily ordering. No compromises.
+              Just clean, healthy habits.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-10 flex gap-4">
               <button
                 onClick={() => navigate("/plans")}
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl text-lg font-semibold shadow-lg"
+                className="bg-green-600 hover:bg-green-700 text-white px-10 py-4 rounded-xl text-lg font-semibold shadow-lg"
               >
                 View Plans
               </button>
 
-              {/* <button
-                onClick={() => navigate("/subscribe")}
-                className="border border-green-600 text-green-700 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-green-50"
+              <button
+                onClick={() => navigate("/login")}
+                className="border border-green-600 text-green-700 px-10 py-4 rounded-xl text-lg font-semibold hover:bg-green-50"
               >
-                Subscribe Now
-              </button> */}
+                Login
+              </button>
             </div>
           </div>
 
-          {/* Right Visual Card */}
+          {/* RIGHT CARD */}
           <div className="relative">
             <div className="bg-white rounded-3xl shadow-xl p-8 border">
               <h3 className="text-xl font-bold text-gray-900 mb-6">
@@ -68,27 +55,27 @@ export default function Home() {
               </h3>
 
               <ul className="space-y-5 text-gray-700">
-                <li className="flex items-start gap-3">
+                <li className="flex gap-3">
                   <span className="text-green-600 text-xl">✔</span>
-                  <span>Freshly cut fruits every single morning</span>
+                  Freshly cut fruits every morning
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex gap-3">
                   <span className="text-green-600 text-xl">✔</span>
-                  <span>No preservatives, no added sugar</span>
+                  No preservatives or added sugar
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex gap-3">
                   <span className="text-green-600 text-xl">✔</span>
-                  <span>Perfect for homes & gated communities</span>
+                  Ideal for homes & gated communities
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="flex gap-3">
                   <span className="text-green-600 text-xl">✔</span>
-                  <span>Pause or resume anytime</span>
+                  Pause or resume anytime
                 </li>
               </ul>
             </div>
 
-            {/* Decorative Glow */}
-            <div className="absolute -z-10 -top-10 -right-10 w-40 h-40 bg-green-200 rounded-full blur-3xl"></div>
+            {/* Glow */}
+            <div className="absolute -z-10 -top-10 -right-10 w-44 h-44 bg-green-200 rounded-full blur-3xl" />
           </div>
 
         </div>

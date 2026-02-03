@@ -1,3 +1,4 @@
+
 import {
   BrowserRouter,
   Routes,
@@ -6,11 +7,11 @@ import {
   Outlet,
 } from "react-router-dom";
 
-/* Layout Components */
+/* ================= LAYOUTS ================= */
 import { Navbar } from "./components/Navbar";
 import { AdminSidebar } from "./components/AdminSidebar";
 
-/* Customer Pages */
+/* ================= CUSTOMER PAGES ================= */
 import Home from "./pages/customer/Home";
 import Plans from "./pages/customer/Plans";
 import Subscribe from "./pages/customer/Subscribe";
@@ -19,7 +20,7 @@ import Login from "./pages/customer/Login";
 import VerifyOtp from "./pages/customer/VerifyOtp";
 import ReferEarn from "./pages/customer/ReferEarn";
 
-/* Admin Pages */
+/* ================= ADMIN PAGES ================= */
 import { AdminLogin } from "./pages/admin/AdminLogin";
 import { AdminDashboard } from "./pages/admin/Dashboard";
 import { Customers } from "./pages/admin/Customers";
@@ -27,12 +28,13 @@ import { Deliveries } from "./pages/admin/Deliveries";
 import { Finance } from "./pages/admin/Finance";
 import { Expenses } from "./pages/admin/Expenses";
 
-/* Auth */
+/* ================= AUTH ================= */
 import { AuthProvider, useAuth } from "./auth/AuthContext";
 
-/* ========================= */
-/* Customer Layout (Navbar) */
-/* ========================= */
+/* ================================================= */
+/* ================= LAYOUTS ======================= */
+/* ================================================= */
+
 function CustomerLayout() {
   return (
     <>
@@ -42,17 +44,6 @@ function CustomerLayout() {
   );
 }
 
-/* ========================= */
-/* Protected Customer Route */
-/* ========================= */
-function ProtectedCustomerRoute() {
-  const { user } = useAuth();
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
-}
-
-/* ========================= */
-/* Admin Layout */
-/* ========================= */
 function AdminLayout() {
   return (
     <div className="flex min-h-screen">
@@ -64,16 +55,33 @@ function AdminLayout() {
   );
 }
 
-/* ========================= */
-/* App */
-/* ========================= */
+/* ================================================= */
+/* ================= ROUTE GUARDS ================== */
+/* ================================================= */
+
+function RequireAuth() {
+  const { user } = useAuth();
+  return user ? <Outlet /> : <Navigate to="/login" replace />;
+}
+
+function RequireAdmin() {
+  const { user } = useAuth();
+  return user?.role === "admin"
+    ? <Outlet />
+    : <Navigate to="/admin/login" replace />;
+}
+
+/* ================================================= */
+/* ================= APP ROOT ====================== */
+/* ================================================= */
+
 export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
 
-          {/* ================= CUSTOMER ROUTES (WITH NAVBAR) ================= */}
+          {/* ================= PUBLIC CUSTOMER ROUTES ================= */}
           <Route element={<CustomerLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/plans" element={<Plans />} />
@@ -81,29 +89,34 @@ export default function App() {
             <Route path="/refer-earn" element={<ReferEarn />} />
             <Route path="/login" element={<Login />} />
             <Route path="/verify-otp" element={<VerifyOtp />} />
-            {/* Protected customer page */}
-            <Route element={<ProtectedCustomerRoute />}>
-              <Route path="/my-subscription" element={<MySubscription />} />
-            </Route>
           </Route>
 
-          {/* ================= CUSTOMER AUTH (NO NAVBAR) ================= */}
-          
+          {/* ================= AUTHENTICATED CUSTOMER ================= */}
+          <Route element={<RequireAuth />}>
+            <Route element={<CustomerLayout />}>
+              <Route
+                path="/my-subscription"
+                element={<MySubscription />}
+              />
+            </Route>
+          </Route>
 
           {/* ================= ADMIN AUTH ================= */}
           <Route path="/admin/login" element={<AdminLogin />} />
 
           {/* ================= ADMIN PROTECTED ================= */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="customers" element={<Customers />} />
-            <Route path="deliveries" element={<Deliveries />} />
-            <Route path="finance" element={<Finance />} />
-            <Route path="expenses" element={<Expenses />} />
-            <Route
-              path="*"
-              element={<Navigate to="/admin/dashboard" replace />}
-            />
+          <Route element={<RequireAdmin />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="customers" element={<Customers />} />
+              <Route path="deliveries" element={<Deliveries />} />
+              <Route path="finance" element={<Finance />} />
+              <Route path="expenses" element={<Expenses />} />
+              <Route
+                path="*"
+                element={<Navigate to="/admin/dashboard" replace />}
+              />
+            </Route>
           </Route>
 
           {/* ================= FALLBACK ================= */}

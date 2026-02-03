@@ -1,6 +1,9 @@
+
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
+import { api } from "../../services/api";
 import { showToast } from "../../Utils/toast";
 
 export default function VerifyOtp() {
@@ -9,22 +12,42 @@ export default function VerifyOtp() {
   const { login } = useAuth();
 
   const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleVerify = () => {
-    if (otp !== "123456") {
-      showToast("Invalid OTP. Please use 123456 🔐");
+  const handleVerify = async () => {
+    if (!otp || otp.length !== 6) {
+      showToast("Please enter a valid 6-digit OTP 🔐");
       return;
     }
 
-    // Save logged-in customer
-    login({
-      phone: state?.phone,
-    });
+    try {
+      setLoading(true);
 
-    showToast("OTP verified! Welcome to Aarogya Harvest 🌿");
+      const res = await api.post("/auth/verify-otp", {
+        phone: state?.phone,
+        otp,
+      });
 
-    // Navigate to protected page
-    navigate("/my-subscription", { replace: true });
+      const { access_token } = res.data;
+
+      // store token
+      localStorage.setItem("token", access_token);
+
+      // save user in context
+      login({
+        phone: state?.phone,
+        role: "customer",
+      });
+
+      showToast("OTP verified! Welcome to Aarogya Harvest 🌿");
+      navigate("/my-subscription", { replace: true });
+    } catch (err) {
+      showToast(
+        err?.response?.data?.detail || "OTP verification failed ❌"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,14 +65,16 @@ export default function VerifyOtp() {
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
           placeholder="Enter 6-digit OTP"
+          maxLength={6}
           className="mt-6 w-full border rounded-xl p-3 text-lg text-center tracking-widest focus:ring-2 focus:ring-green-600 outline-none"
         />
 
         <button
           onClick={handleVerify}
-          className="mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl text-lg font-semibold"
+          disabled={loading}
+          className="mt-6 w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white py-3 rounded-xl text-lg font-semibold"
         >
-          Verify & Continue
+          {loading ? "Verifying..." : "Verify & Continue"}
         </button>
 
         <p className="mt-4 text-center text-xs text-gray-500">

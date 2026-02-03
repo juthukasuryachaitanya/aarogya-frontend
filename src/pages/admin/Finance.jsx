@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -12,25 +13,53 @@ import {
   Bar,
   Legend,
 } from "recharts";
-
-const monthlyIncome = [
-  { month: "Jan", income: 45000, expense: 28000 },
-  { month: "Feb", income: 52000, expense: 30000 },
-  { month: "Mar", income: 61000, expense: 34000 },
-  { month: "Apr", income: 68000, expense: 39000 },
-  { month: "May", income: 75000, expense: 42000 },
-];
-
-const expenseData = [
-  { name: "Fruits", value: 45 },
-  { name: "Packaging", value: 15 },
-  { name: "Delivery", value: 25 },
-  { name: "Operations", value: 15 },
-];
+import { api } from "../../api/api";
+import { showToast } from "../../Utils/toast";
 
 const COLORS = ["#2e7d32", "#66bb6a", "#ffa726", "#ef5350"];
 
 export function Finance() {
+  const [loading, setLoading] = useState(true);
+
+  const [stats, setStats] = useState({
+    monthlyRevenue: 0,
+    yearlyRevenue: 0,
+    monthlyExpense: 0,
+    profit: 0,
+  });
+
+  const [monthlyTrend, setMonthlyTrend] = useState([]);
+  const [expenseBreakdown, setExpenseBreakdown] = useState([]);
+
+  useEffect(() => {
+    fetchFinanceData();
+  }, []);
+
+  const fetchFinanceData = async () => {
+    try {
+      setLoading(true);
+
+      const res = await api.get("/admin/finance/summary");
+
+      setStats(res.data.stats);
+      setMonthlyTrend(res.data.monthlyTrend);
+      setExpenseBreakdown(res.data.expenseBreakdown);
+
+    } catch (err) {
+      showToast("Failed to load finance data 📉");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64 text-gray-500">
+        Loading financial data...
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 space-y-8">
 
@@ -46,19 +75,23 @@ export function Finance() {
 
       {/* ===== STATS ===== */}
       <div className="grid md:grid-cols-4 gap-6">
-        <StatCard title="Monthly Revenue" value="₹75,000" />
-        <StatCard title="Yearly Revenue" value="₹8.2 L" />
-        <StatCard title="Monthly Expenses" value="₹42,000" />
-        <StatCard title="Net Profit" value="₹33,000" positive />
+        <StatCard title="Monthly Revenue" value={`₹${stats.monthlyRevenue}`} />
+        <StatCard title="Yearly Revenue" value={`₹${stats.yearlyRevenue}`} />
+        <StatCard title="Monthly Expenses" value={`₹${stats.monthlyExpense}`} />
+        <StatCard
+          title="Net Profit"
+          value={`₹${stats.profit}`}
+          positive={stats.profit > 0}
+        />
       </div>
 
       {/* ===== CHARTS ===== */}
       <div className="grid lg:grid-cols-2 gap-8">
 
-        {/* Income Trend */}
+        {/* Monthly Income Trend */}
         <ChartCard title="Monthly Income Trend">
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={monthlyIncome}>
+            <LineChart data={monthlyTrend}>
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
@@ -72,19 +105,19 @@ export function Finance() {
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Expense Pie */}
+        {/* Expense Breakdown */}
         <ChartCard title="Expense Breakdown">
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={expenseData}
+                data={expenseBreakdown}
                 dataKey="value"
                 nameKey="name"
                 outerRadius={100}
                 label
               >
-                {expenseData.map((_, i) => (
-                  <Cell key={i} fill={COLORS[i]} />
+                {expenseBreakdown.map((_, i) => (
+                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
@@ -95,7 +128,7 @@ export function Finance() {
         {/* Income vs Expense */}
         <ChartCard title="Income vs Expense">
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={monthlyIncome}>
+            <BarChart data={monthlyTrend}>
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
@@ -111,7 +144,9 @@ export function Finance() {
   );
 }
 
-/* ===== Reusable Components ===== */
+/* ===================== */
+/* REUSABLE COMPONENTS */
+/* ===================== */
 
 function StatCard({ title, value, positive }) {
   return (

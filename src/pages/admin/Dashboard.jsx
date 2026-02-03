@@ -1,30 +1,50 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../api/api";
 
 export function AdminDashboard() {
   const navigate = useNavigate();
+  const [stats, setStats] = useState(null);
 
-  const stats = [
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await api.get("/admin/finance/summary");
+        setStats(res.data);
+      } catch (err) {
+        console.error("Failed to load dashboard stats", err);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  if (!stats) {
+    return <div className="p-6">Loading dashboard…</div>;
+  }
+
+  const cards = [
     {
       label: "Total Customers",
-      value: 120,
+      value: stats.total_customers,
       color: "text-gray-900",
       bg: "bg-gray-100",
     },
     {
       label: "Active Subscriptions",
-      value: 90,
+      value: stats.active_subscriptions,
       color: "text-green-700",
       bg: "bg-green-100",
     },
     {
       label: "Paused Subscriptions",
-      value: 30,
+      value: stats.paused_subscriptions,
       color: "text-orange-700",
       bg: "bg-orange-100",
     },
     {
       label: "Today's Deliveries",
-      value: 90,
+      value: stats.today_deliveries,
       color: "text-blue-700",
       bg: "bg-blue-100",
     },
@@ -32,8 +52,6 @@ export function AdminDashboard() {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-extrabold text-gray-900">
           Admin Dashboard
@@ -43,11 +61,10 @@ export function AdminDashboard() {
         </p>
       </div>
 
-      {/* Stats */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat, index) => (
+        {cards.map((stat, i) => (
           <div
-            key={index}
+            key={i}
             className="bg-white rounded-2xl shadow-md border p-6"
           >
             <div
@@ -65,7 +82,6 @@ export function AdminDashboard() {
         ))}
       </div>
 
-      {/* Quick Actions */}
       <div className="mt-10">
         <h2 className="text-lg font-bold text-gray-900 mb-4">
           Quick Actions
@@ -74,14 +90,14 @@ export function AdminDashboard() {
         <div className="flex flex-wrap gap-4">
           <button
             onClick={() => navigate("/admin/customers")}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl text-lg font-semibold transition"
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl text-lg font-semibold"
           >
             Manage Customers
           </button>
 
           <button
             onClick={() => navigate("/admin/deliveries")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl text-lg font-semibold transition"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl text-lg font-semibold"
           >
             View Deliveries
           </button>

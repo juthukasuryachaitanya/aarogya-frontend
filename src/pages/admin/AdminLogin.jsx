@@ -1,25 +1,46 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { api } from "../../services/api";
 import { showToast } from "../../Utils/toast";
 
 export function AdminLogin() {
   const navigate = useNavigate();
   const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (phone.length !== 10) {
       showToast("Please enter a valid 10-digit mobile number 📱");
       return;
     }
 
-    showToast("Welcome Admin 👋 Redirecting to dashboard");
-    navigate("/admin/dashboard");
+    try {
+      setLoading(true);
+
+      // 🔐 Backend admin login (OTP / auth handled server-side)
+      const res = await api.post("/admin/login", { phone });
+
+      // Expecting JWT from backend
+      const { access_token } = res.data;
+
+      localStorage.setItem("admin_token", access_token);
+
+      showToast("Welcome Admin 👋 Redirecting to dashboard");
+      navigate("/admin/dashboard", { replace: true });
+    } catch (err) {
+      showToast(
+        err?.response?.data?.detail ||
+          "Admin login failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border p-8">
-        
+
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl font-extrabold text-gray-900">
@@ -48,15 +69,16 @@ export function AdminLogin() {
           {/* Login Button */}
           <button
             onClick={handleLogin}
-            className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-xl text-lg font-semibold transition-all"
+            disabled={loading}
+            className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-xl text-lg font-semibold transition-all disabled:opacity-60"
           >
-            Continue
+            {loading ? "Verifying..." : "Continue"}
           </button>
         </div>
 
         {/* Info */}
         <p className="mt-6 text-center text-xs text-gray-500">
-          Authorized access only · OTP verification enabled
+          Authorized access only · Secured with JWT
         </p>
       </div>
     </div>

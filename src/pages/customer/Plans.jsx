@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -5,11 +6,13 @@ export default function Plans() {
   const navigate = useNavigate();
   const [hoveredPlan, setHoveredPlan] = useState(null);
 
+  /* 🔗 BACKEND-READY PLAN CONFIG */
   const plans = [
     {
       id: "lite",
       name: "Aarogya Lite",
-      price: "₹1499",
+      price: 1499,
+      displayPrice: "₹1499",
       unit: "/ month",
       qty: "240g per day",
       ideal: "Best for individuals",
@@ -22,7 +25,8 @@ export default function Plans() {
     {
       id: "classic",
       name: "Aarogya Classic",
-      price: "₹1999",
+      price: 1999,
+      displayPrice: "₹1999",
       unit: "/ month",
       qty: "390g per day",
       ideal: "Most popular choice",
@@ -36,7 +40,8 @@ export default function Plans() {
     {
       id: "premium",
       name: "Aarogya Premium",
-      price: "₹2499",
+      price: 2499,
+      displayPrice: "₹2499",
       unit: "/ month",
       qty: "560g per day",
       ideal: "For maximum nutrition",
@@ -49,22 +54,20 @@ export default function Plans() {
   ];
 
   const isHighlighted = (plan) => {
-    if (hoveredPlan) {
-      return hoveredPlan === plan.id;
-    }
+    if (hoveredPlan) return hoveredPlan === plan.id;
     return plan.popular;
   };
 
   return (
     <div className="relative min-h-screen px-6 py-16 overflow-hidden bg-cream">
 
-      {/* ===== BACKGROUND LAYERS ===== */}
+      {/* BACKGROUND */}
       <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-cream to-green-100 -z-10" />
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-200 rounded-full blur-3xl opacity-50 -z-10" />
       <div className="absolute bottom-[-6rem] right-[-6rem] w-96 h-96 bg-orange-200 rounded-full blur-3xl opacity-50 -z-10" />
 
-      {/* Header */}
-      <div style={{marginTop:"-50px"}} className="relative max-w-4xl mx-auto text-center">
+      {/* HEADER */}
+      <div style={{ marginTop: "-50px" }} className="max-w-4xl mx-auto text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold text-primary">
           Choose Your <span className="text-green-800">Daily Fruit Habit</span>
         </h1>
@@ -73,8 +76,8 @@ export default function Plans() {
         </p>
       </div>
 
-      {/* Plans */}
-      <div className="relative mt-16 max-w-7xl mx-auto grid lg:grid-cols-3 gap-10">
+      {/* PLANS */}
+      <div className="mt-16 max-w-7xl mx-auto grid lg:grid-cols-3 gap-10">
         {plans.map((plan) => {
           const highlighted = isHighlighted(plan);
 
@@ -89,14 +92,14 @@ export default function Plans() {
                   : "border border-gray-200"
               }`}
             >
-              {/* Badge */}
+              {/* BADGE */}
               {plan.popular && !hoveredPlan && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-800 text-white text-xs px-4 py-1 rounded-full shadow">
                   MOST POPULAR
                 </div>
               )}
 
-              {/* Plan Info */}
+              {/* PLAN INFO */}
               <div>
                 <h3 className="text-2xl font-extrabold text-gray-900">
                   {plan.name}
@@ -108,11 +111,9 @@ export default function Plans() {
 
                 <div className="mt-6">
                   <span className="text-4xl font-extrabold text-orange-600">
-                    {plan.price}
+                    {plan.displayPrice}
                   </span>
-                  <span className="text-gray-600 ml-1">
-                    {plan.unit}
-                  </span>
+                  <span className="text-gray-600 ml-1">{plan.unit}</span>
                   <p className="text-sm text-gray-600 mt-1">
                     {plan.qty}
                   </p>
@@ -133,7 +134,7 @@ export default function Plans() {
                 onClick={() => navigate("/subscribe", { state: plan })}
                 className={`mt-8 w-full py-4 rounded-2xl text-lg font-semibold transition-all duration-300 ${
                   highlighted
-                    ? "bg-green-800 hover:bg-green-900 text-white opacity-100"
+                    ? "bg-green-800 hover:bg-green-900 text-white"
                     : "bg-green-800 text-white opacity-20"
                 }`}
               >
@@ -144,8 +145,8 @@ export default function Plans() {
         })}
       </div>
 
-      {/* Footer */}
-      <div className="relative mt-20 text-center text-gray-600 text-sm">
+      {/* FOOTER */}
+      <div className="mt-20 text-center text-gray-600 text-sm">
         A fruit bowl a day keeps illness away 🍎 · Aarogya Harvest Promise
       </div>
     </div>
