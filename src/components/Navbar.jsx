@@ -3,7 +3,7 @@ import logo from "../assets/aarogya-logo.jpeg";
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 bg-cream border-b">
+    <nav className="sticky top-0 z-50  border-b">
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         
         <div className="flex items-center gap-3">
