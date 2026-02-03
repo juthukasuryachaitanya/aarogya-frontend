@@ -2,7 +2,7 @@
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { api } from "../../api/api";
+import { api } from "../../services/api";
 import { showToast } from "../../Utils/toast";
 import { useAuth } from "../../auth/AuthContext";
 

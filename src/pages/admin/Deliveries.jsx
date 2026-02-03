@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../../api/api";
+import { api } from "../../services/api";
 import { showToast } from "../../Utils/toast";
 
 export function Deliveries() {

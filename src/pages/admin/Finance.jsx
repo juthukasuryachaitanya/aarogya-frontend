@@ -13,7 +13,7 @@ import {
   Bar,
   Legend,
 } from "recharts";
-import { api } from "../../api/api";
+import { api } from "../../services/api";
 import { showToast } from "../../Utils/toast";
 
 const COLORS = ["#2e7d32", "#66bb6a", "#ffa726", "#ef5350"];

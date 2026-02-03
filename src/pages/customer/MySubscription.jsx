@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../api/api";
+import App from "../../App";
 import { useAuth } from "../../auth/AuthContext";
 import { showToast } from "../../Utils/toast";
 
