@@ -211,7 +211,7 @@ export default function Plans() {
       </section>
 
       {/* ================= FOOTER ================= */}
-      <footer style={{marginBottom:"-40px"}} className="bg-white shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
+      <footer style={{marginBottom:"-42px"}} className="bg-white shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-sm text-white-500">
           © {new Date().getFullYear()} Aarogya Harvest · Fresh Fruits, Done Right
         </div>
