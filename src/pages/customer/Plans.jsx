@@ -62,9 +62,9 @@ export default function Plans() {
     <div className="relative min-h-screen px-6 py-16 overflow-hidden bg-cream">
 
       {/* BACKGROUND */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-cream to-green-100 -z-10" />
+      {/* <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-cream to-green-100 -z-10" />
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-200 rounded-full blur-3xl opacity-50 -z-10" />
-      <div className="absolute bottom-[-6rem] right-[-6rem] w-96 h-96 bg-orange-200 rounded-full blur-3xl opacity-50 -z-10" />
+      <div className="absolute bottom-[-6rem] right-[-6rem] w-96 h-96 bg-orange-200 rounded-full blur-3xl opacity-50 -z-10" /> */}
 
       {/* HEADER */}
       <div style={{ marginTop: "-50px" }} className="max-w-4xl mx-auto text-center">
@@ -86,11 +86,10 @@ export default function Plans() {
               key={plan.id}
               onMouseEnter={() => setHoveredPlan(plan.id)}
               onMouseLeave={() => setHoveredPlan(null)}
-              className={`relative bg-white rounded-[2.5rem] shadow-xl p-8 flex flex-col justify-between transition-all duration-300 ${
-                highlighted
-                  ? "border-2 border-green-700 scale-105"
-                  : "border border-gray-200"
-              }`}
+              className={`relative bg-white rounded-[2.5rem] shadow-xl p-8 flex flex-col justify-between transition-all duration-300 ${highlighted
+                ? "border-2 border-green-700 scale-105"
+                : "border border-gray-200"
+                }`}
             >
               {/* BADGE */}
               {plan.popular && !hoveredPlan && (
@@ -132,11 +131,10 @@ export default function Plans() {
               {/* CTA */}
               <button
                 onClick={() => navigate("/subscribe", { state: plan })}
-                className={`mt-8 w-full py-4 rounded-2xl text-lg font-semibold transition-all duration-300 ${
-                  highlighted
-                    ? "bg-green-800 hover:bg-green-900 text-white"
-                    : "bg-green-800 text-white opacity-20"
-                }`}
+                className={`mt-8 w-full py-4 rounded-2xl text-lg font-semibold transition-all duration-300 ${highlighted
+                  ? "bg-green-800 hover:bg-green-900 text-white"
+                  : "bg-green-800 text-white opacity-20"
+                  }`}
               >
                 Start My Subscription
               </button>
@@ -144,11 +142,80 @@ export default function Plans() {
           );
         })}
       </div>
+      {/* ================= CONTACT SECTION ================= */}
+      <section style={{ marginTop: "20px" }} className="bg-white ">
+        <div className="max-w-7xl mx-auto px-6 py-14">
 
-      {/* FOOTER */}
-      <div className="mt-20 text-center text-gray-600 text-sm">
-        A fruit bowl a day keeps illness away 🍎 · Aarogya Harvest Promise
-      </div>
+          <h3 className="text-2xl font-extrabold text-gray-900 text-center mb-3">
+            Get in Touch
+          </h3>
+
+          <p className="text-center text-gray-600 mb-10">
+            Have questions or want to start your subscription? We’re just a message away.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+
+            {/* Contact Info */}
+            <div className="space-y-4 text-center md:text-left">
+              <p className="font-semibold text-gray-900">Contact Details</p>
+
+              <p className="text-gray-600">
+                📞 <span className="font-medium">+91 9XXXXXXXXX</span>
+              </p>
+
+              <p className="text-gray-600">
+                💬 WhatsApp: <span className="font-medium">+91 9XXXXXXXXX</span>
+              </p>
+
+              <p className="text-gray-600">
+                ✉️ <span className="font-medium">hello@aarogyaharvest.in</span>
+              </p>
+            </div>
+
+            {/* Social Media */}
+            <div className="space-y-4 text-center">
+              <p className="font-semibold text-gray-900">Follow Us</p>
+
+              <div className="flex justify-center gap-4">
+                <a href="#" className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 transition">
+                  f
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 transition">
+                  📸
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 transition">
+                  ▶
+                </a>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="flex flex-col items-center justify-center text-center">
+              <p className="font-semibold text-gray-900 mb-3">
+                Prefer WhatsApp?
+              </p>
+
+              <a
+                href="https://wa.me/919XXXXXXXXX"
+                target="_blank"
+                rel="noreferrer"
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer style={{marginBottom:"-40px"}} className="bg-white shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-sm text-white-500">
+          © {new Date().getFullYear()} Aarogya Harvest · Fresh Fruits, Done Right
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter,
   Routes,
@@ -29,7 +28,7 @@ import { Finance } from "./pages/admin/Finance";
 import { Expenses } from "./pages/admin/Expenses";
 
 /* ================= AUTH ================= */
-import { AuthProvider, useAuth } from "./auth/AuthContext";
+import { AuthProvider } from "./auth/AuthContext";
 
 /* ================================================= */
 /* ================= LAYOUTS ======================= */
@@ -56,22 +55,6 @@ function AdminLayout() {
 }
 
 /* ================================================= */
-/* ================= ROUTE GUARDS ================== */
-/* ================================================= */
-
-function RequireAuth() {
-  const { user } = useAuth();
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
-}
-
-function RequireAdmin() {
-  const { user } = useAuth();
-  return user?.role === "admin"
-    ? <Outlet />
-    : <Navigate to="/admin/login" replace />;
-}
-
-/* ================================================= */
 /* ================= APP ROOT ====================== */
 /* ================================================= */
 
@@ -81,7 +64,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
 
-          {/* ================= PUBLIC CUSTOMER ROUTES ================= */}
+          {/* ================= CUSTOMER ROUTES ================= */}
           <Route element={<CustomerLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/plans" element={<Plans />} />
@@ -89,34 +72,21 @@ export default function App() {
             <Route path="/refer-earn" element={<ReferEarn />} />
             <Route path="/login" element={<Login />} />
             <Route path="/verify-otp" element={<VerifyOtp />} />
+            <Route path="/my-subscription" element={<MySubscription />} />
           </Route>
 
-          {/* ================= AUTHENTICATED CUSTOMER ================= */}
-          <Route element={<RequireAuth />}>
-            <Route element={<CustomerLayout />}>
-              <Route
-                path="/my-subscription"
-                element={<MySubscription />}
-              />
-            </Route>
-          </Route>
-
-          {/* ================= ADMIN AUTH ================= */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-
-          {/* ================= ADMIN PROTECTED ================= */}
-          <Route element={<RequireAdmin />}>
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="dashboard" element={<AdminDashboard />} />
-              <Route path="customers" element={<Customers />} />
-              <Route path="deliveries" element={<Deliveries />} />
-              <Route path="finance" element={<Finance />} />
-              <Route path="expenses" element={<Expenses />} />
-              <Route
-                path="*"
-                element={<Navigate to="/admin/dashboard" replace />}
-              />
-            </Route>
+          {/* ================= ADMIN ROUTES (NO PROTECTION) ================= */}
+          <Route path="/admin" element={<AdminLayout />}>
+            {/* <Route path="login" element={<AdminLogin />} /> */}
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="deliveries" element={<Deliveries />} />
+            <Route path="finance" element={<Finance />} />
+            <Route path="expenses" element={<Expenses />} />
+            <Route
+              path="*"
+              element={<Navigate to="/admin/dashboard" replace />}
+            />
           </Route>
 
           {/* ================= FALLBACK ================= */}
