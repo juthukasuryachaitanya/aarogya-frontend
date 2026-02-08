@@ -15,9 +15,9 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(false);
 
   const images = [
-    "/src/assets/aarogya-logo-1.jpeg",
-    "/src/assets/aarogya-menu.jpeg",
-    "/src/assets/aarogya-plan-prices.jpeg",
+    "/assets/aarogya-logo-1.jpeg",
+    "/assets/aarogya-menu.jpeg",
+    "/assets/aarogya-plan-prices.jpeg",
   ];
 
   useEffect(() => {
@@ -307,6 +307,44 @@ export default function Home() {
       © {new Date().getFullYear()} Aarogya Harvest · Fresh Fruits, Done Right
     </div>
   </footer>
+ {/* ================= MENU MODAL ================= */}
+{showMenu && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+
+    {/* Modal container */}
+    <div className="relative bg-white rounded-3xl shadow-2xl
+                    w-full max-w-5xl h-[90vh]
+                    flex flex-col">
+
+      {/* Close button */}
+      <button
+        onClick={() => setShowMenu(false)}
+        className="absolute top-4 right-4 w-10 h-10 rounded-full
+                   flex items-center justify-center
+                   text-gray-600 hover:text-gray-900
+                   hover:bg-gray-100 transition"
+        aria-label="Close menu"
+      >
+        ✕
+      </button>
+
+      {/* Title */}
+      <h3 className="text-2xl font-bold text-center mt-6 mb-4 text-gray-900">
+        Our Menu
+      </h3>
+
+      {/* Image area */}
+      <div className="flex-1 flex items-center justify-center px-4 pb-6">
+        <img
+          src="/assets/aarogya-menu-2.png"
+          alt="Aarogya Menu"
+          className="max-h-full max-w-full object-contain rounded-xl"
+        />
+      </div>
+
+    </div>
+  </div>
+)}
 
 </div>
 

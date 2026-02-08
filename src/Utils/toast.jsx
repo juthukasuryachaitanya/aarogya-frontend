@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import logo from "../assets/aarogya-logo.jpeg";
+import logo from "/assets/aarogya-logo.jpeg";
 
 export const showToast = (message) => {
   toast.custom(
