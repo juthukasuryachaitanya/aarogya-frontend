@@ -1,7 +1,14 @@
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import {
+  FaPhoneAlt,
+  FaWhatsapp,
+  FaEnvelope,
+  FaFacebookF,
+  FaInstagram,
+  FaYoutube,
+} from "react-icons/fa";
 export default function Plans() {
   const navigate = useNavigate();
   const [hoveredPlan, setHoveredPlan] = useState(null);
@@ -143,69 +150,130 @@ export default function Plans() {
         })}
       </div>
       {/* ================= CONTACT SECTION ================= */}
-      <section style={{ marginTop: "20px" }} className="bg-white ">
-        <div className="max-w-7xl mx-auto px-6 py-14">
-
-          <h3 className="text-2xl font-extrabold text-gray-900 text-center mb-3">
+      <section className="bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+      
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center mb-3">
             Get in Touch
           </h3>
-
-          <p className="text-center text-gray-600 mb-10">
-            Have questions or want to start your subscription? We’re just a message away.
+      
+          <p className="text-center text-gray-600 mb-10 sm:mb-14">
+            Questions, subscriptions, or community onboarding — we’re happy to help.
           </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-
-            {/* Contact Info */}
-            <div className="space-y-4 text-center md:text-left">
-              <p className="font-semibold text-gray-900">Contact Details</p>
-
-              <p className="text-gray-600">
-                📞 <span className="font-medium">+91 9XXXXXXXXX</span>
+      
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+      
+            {/* ===== Contact Details Card ===== */}
+            <div className="bg-gray-50 rounded-3xl p-6 shadow-lg hover:shadow-xl transition">
+              <p className="font-semibold text-gray-900 mb-6">
+                Contact Details
               </p>
-
-              <p className="text-gray-600">
-                💬 WhatsApp: <span className="font-medium">+91 9XXXXXXXXX</span>
-              </p>
-
-              <p className="text-gray-600">
-                ✉️ <span className="font-medium">hello@aarogyaharvest.in</span>
-              </p>
-            </div>
-
-            {/* Social Media */}
-            <div className="space-y-4 text-center">
-              <p className="font-semibold text-gray-900">Follow Us</p>
-
-              <div className="flex justify-center gap-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 transition">
-                  f
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 transition">
-                  📸
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center hover:bg-green-200 transition">
-                  ▶
-                </a>
+      
+              <div className="space-y-5 text-gray-700">
+      
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                    <FaPhoneAlt size={16} />
+                  </div>
+                  <span className="font-medium break-all">
+                    +91 9392814951
+                  </span>
+                </div>
+      
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                    <FaWhatsapp size={18} />
+                  </div>
+                  <span className="font-medium break-all">
+                    +91 9392814951
+                  </span>
+                </div>
+      
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                    <FaEnvelope size={16} />
+                  </div>
+                  <span className="font-medium break-all">
+                    aagrogyaharvest@gmail.com
+                  </span>
+                </div>
+      
               </div>
             </div>
-
-            {/* CTA */}
-            <div className="flex flex-col items-center justify-center text-center">
-              <p className="font-semibold text-gray-900 mb-3">
-                Prefer WhatsApp?
-              </p>
-
+      
+            {/* ===== WhatsApp CTA Card ===== */}
+            <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-3xl p-6 text-white shadow-lg flex flex-col justify-between">
+              <div>
+                <p className="font-semibold text-lg mb-2">
+                  Prefer WhatsApp?
+                </p>
+                <p className="text-sm opacity-90">
+                  Fastest way to start or manage your subscription.
+                </p>
+              </div>
+      
               <a
-                href="https://wa.me/919XXXXXXXXX"
+                href="https://wa.me/9392814951"
                 target="_blank"
                 rel="noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition"
+                className="mt-6 bg-white text-green-700 text-center py-3 rounded-xl font-semibold hover:bg-green-50 transition"
               >
                 Chat on WhatsApp
               </a>
             </div>
-
+      
+            {/* ===== Social Media Card ===== */}
+            <div className="bg-gray-50 rounded-3xl p-6 shadow-lg hover:shadow-xl transition text-center">
+              <p className="font-semibold text-gray-900 mb-6">
+                Follow Us
+              </p>
+      
+              <div className="flex justify-center gap-4 flex-wrap">
+                <a
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook"
+                  className="w-12 h-12 rounded-full bg-green-100 text-green-600
+                             flex items-center justify-center
+                             hover:bg-green-600 hover:text-white
+                             transition-all duration-300"
+                >
+                  <FaFacebookF size={18} />
+                </a>
+      
+                <a
+                  href="https://www.instagram.com/aarogya_harvest?igsh=MXRvdjM3OXo1NnplNA=="
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                  className="w-12 h-12 rounded-full bg-green-100 text-green-600
+                             flex items-center justify-center
+                             hover:bg-green-600 hover:text-white
+                             transition-all duration-300"
+                >
+                  <FaInstagram size={18} />
+                </a>
+      
+                <a
+                  href="https://www.youtube.com/@aarogyaharvest"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="YouTube"
+                  className="w-12 h-12 rounded-full bg-green-100 text-green-600
+                             flex items-center justify-center
+                             hover:bg-green-600 hover:text-white
+                             transition-all duration-300"
+                >
+                  <FaYoutube size={18} />
+                </a>
+              </div>
+      
+              <p className="text-sm text-gray-600 mt-4">
+                Updates, menus & behind-the-scenes
+              </p>
+            </div>
+      
           </div>
         </div>
       </section>

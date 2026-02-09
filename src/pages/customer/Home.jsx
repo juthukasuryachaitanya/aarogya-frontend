@@ -145,10 +145,10 @@ export default function Home() {
   </section>
 
   {/* ================= DELIVERY AREAS ================= */}
-  <section className="bg-gray-50">
+  <section style={{marginTop:"20px"}} className="bg-gray-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-      <h3 className="text-2xl font-extrabold text-gray-900 text-center mb-3">
-        Currently Delivering In
+      <h3 className="text-22l font-extrabold text-gray-900 text-center mb-3">
+        Currently Delivering n
       </h3>
 
       <p className="text-center text-gray-600 mb-12">
@@ -199,7 +199,7 @@ export default function Home() {
               <FaPhoneAlt size={16} />
             </div>
             <span className="font-medium break-all">
-              +91 9XXXXXXXXX
+              +91 9392814951
             </span>
           </div>
 
@@ -208,7 +208,7 @@ export default function Home() {
               <FaWhatsapp size={18} />
             </div>
             <span className="font-medium break-all">
-              +91 9XXXXXXXXX
+              +91 9392814951
             </span>
           </div>
 
@@ -217,7 +217,7 @@ export default function Home() {
               <FaEnvelope size={16} />
             </div>
             <span className="font-medium break-all">
-              hello@aarogyaharvest.in
+              aagrogyaharvest@gmail.com
             </span>
           </div>
 
@@ -266,7 +266,7 @@ export default function Home() {
           </a>
 
           <a
-            href="https://www.instagram.com/"
+            href="https://www.instagram.com/aarogya_harvest?igsh=MXRvdjM3OXo1NnplNA=="
             target="_blank"
             rel="noreferrer"
             aria-label="Instagram"
@@ -279,7 +279,7 @@ export default function Home() {
           </a>
 
           <a
-            href="https://www.youtube.com/"
+            href="https://www.youtube.com/@aarogyaharvest"
             target="_blank"
             rel="noreferrer"
             aria-label="YouTube"
