@@ -154,7 +154,7 @@ export default function Home() {
       <NoiseOverlay />
 
       {/* ================== HERO SECTION (Responsive) ================== */}
-      <section style={{marginTop:"-100px"}} className="relative pt-12 pb-20 md:pt-32 md:pb-20 overflow-hidden">
+      <section style={{marginTop:"-80px"}} className="relative pt-12 pb-20 md:pt-32 md:pb-20 overflow-hidden">
         {/* Blobs */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute -top-20 -right-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-green-200/50 rounded-full blur-[80px]" />
