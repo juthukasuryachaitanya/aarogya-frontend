@@ -72,7 +72,7 @@ export function Navbar() {
                 Plans
               </Link>
 
-              <Link
+              {/* <Link
                 to="/my-subscription"
                 onClick={() => setOpen(false)}
                 className="px-5 py-3 hover:bg-green-50 hover:text-green-700 transition"
@@ -86,7 +86,7 @@ export function Navbar() {
                 className="px-5 py-3 hover:bg-green-50 hover:text-green-700 transition"
               >
                 Refer A Friend
-              </Link>
+              </Link> */}
 
             </div>
           </div>
