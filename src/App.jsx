@@ -69,10 +69,10 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/plans" element={<Plans />} />
             <Route path="/subscribe" element={<Subscribe />} />
-            <Route path="/refer-earn" element={<ReferEarn />} />
+            {/* <Route path="/refer-earn" element={<ReferEarn />} /> */}
             <Route path="/login" element={<Login />} />
             <Route path="/verify-otp" element={<VerifyOtp />} />
-            <Route path="/my-subscription" element={<MySubscription />} />
+            {/* <Route path="/my-subscription" element={<MySubscription />} /> */}
           </Route>
 
           {/* ================= ADMIN ROUTES (NO PROTECTION) ================= */}

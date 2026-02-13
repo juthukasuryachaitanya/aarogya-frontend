@@ -31,12 +31,12 @@ export function Navbar() {
             <Link to="/plans" className="hover:text-green-700 transition">
               Plans
             </Link>
-            <Link to="/my-subscription" className="hover:text-green-700 transition">
+            {/* <Link to="/my-subscription" className="hover:text-green-700 transition">
               My Subscription
-            </Link>
-            <Link to="/refer-earn" className="hover:text-green-700 transition">
+            </Link> */}
+            {/* <Link to="/refer-earn" className="hover:text-green-700 transition">
               Refer A Friend
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile Menu Button */}

@@ -3,8 +3,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaPhoneAlt, FaWhatsapp, FaEnvelope, FaFacebookF, FaInstagram, FaYoutube,
-  FaCheck, FaCrown, FaAppleAlt, FaSeedling, FaArrowRight, FaTimes, FaStar, FaLeaf
+  FaCheck, FaCrown, FaAppleAlt, FaSeedling, FaArrowRight, FaTimes, FaStar, 
+  FaLeaf, FaShoppingBasket, FaTag
 } from "react-icons/fa";
+
 
 // --- MOCK DATA ---
 const plans = [
@@ -15,7 +17,7 @@ const plans = [
     displayPrice: "1,499",
     unit: "/ mo",
     qty: "240g",
-    qtyLabel: "per day",
+    qtyLabel: "bowl",
     ideal: "For Beginners",
     icon: FaSeedling,
     color: "text-green-600",
@@ -38,7 +40,7 @@ const plans = [
     displayPrice: "1,999",
     unit: "/ mo",
     qty: "390g",
-    qtyLabel: "per day",
+    qtyLabel: "bowl",
     ideal: "Most Popular",
     popular: true,
     icon: FaAppleAlt,
@@ -62,7 +64,7 @@ const plans = [
     displayPrice: "2,499",
     unit: "/ mo",
     qty: "560g",
-    qtyLabel: "per day",
+    qtyLabel: "bowl",
     ideal: "Max Nutrition",
     icon: FaCrown,
     color: "text-purple-600",
@@ -78,6 +80,41 @@ const plans = [
     details: "For those who compromise on nothing. Experience the luxury of daily exotic fruits, larger portions, and our widest variety of nutrient-dense options.",
     sampleMenu: ["Blueberries", "Dragon Fruit", "Imported Apple", "Kiwi", "Pomegranate"]
   },
+  // --- NEW PLAN: WHOLE FRUITS ---
+  {
+    id: "whole",
+    name: "Whole Basket",
+    displayPrice: "Market",
+    unit: "Rates",
+    qty: "Custom",
+    qtyLabel: "weight",
+    ideal: "For Families",
+    icon: FaShoppingBasket,
+    color: "text-blue-600",
+    gradient: "from-blue-50 to-cyan-50",
+    border: "border-blue-100",
+    btnColor: "bg-blue-600 hover:bg-blue-700",
+    points: [
+      "Buy individual fruits by Kg/Dozen",
+      "No cutting, delivered whole",
+      "Wash & eat at your convenience",
+      "Weekly bulk delivery available"
+    ],
+    details: "Love cutting your own fruit? Order farm-fresh whole fruits by the kilo. Perfect for large families or storing fruits for the whole week.",
+    sampleMenu: ["1kg Shimla Apples", "1 Dozen Bananas", "2kg Papaya", "500g Grapes"]
+  }
+];
+
+// --- UPDATED MARKET RATES DATA (With Comparison) ---
+const marketRates = [
+  { name: "Shimla Apple", marketPrice: 240, ourPrice: 180, unit: "kg", icon: "🍎" },
+  { name: "Robusta Banana", marketPrice: 80, ourPrice: 60, unit: "doz", icon: "🍌" },
+  { name: "Papaya", marketPrice: 65, ourPrice: 45, unit: "kg", icon: "🍈" }, // Using Melon as Papaya placeholder
+  { name: "Pomegranate", marketPrice: 280, ourPrice: 220, unit: "kg", icon: "🔴" },
+  { name: "Kiwi (Imp)", marketPrice: 55, ourPrice: 40, unit: "pc", icon: "🥝" },
+  { name: "Dragon Fruit", marketPrice: 140, ourPrice: 110, unit: "pc", icon: "🐉" },
+  { name: "Watermelon", marketPrice: 40, ourPrice: 25, unit: "kg", icon: "🍉" },
+  { name: "Musk Melon", marketPrice: 60, ourPrice: 40, unit: "kg", icon: "🍈" },
 ];
 
 const testimonials = [
@@ -116,8 +153,9 @@ export default function Plans() {
       </div>
 
       {/* ================= PRICING CARDS ================= */}
-      <div style={{marginTop:"-40px"}} className="max-w-7xl mx-auto px-4 sm:px-6 pb-24">
-        <div className="grid lg:grid-cols-3 gap-8 items-center">
+      <div style={{marginTop:"-40px"}} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+        {/* Grid adjusted for 4 items on large screens */}
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
           {plans.map((plan) => {
             const Icon = plan.icon;
             const isPop = plan.popular;
@@ -127,7 +165,7 @@ export default function Plans() {
                 key={plan.id}
                 whileHover={{ y: -10 }}
                 className={`
-                  relative group bg-white rounded-[2.5rem] transition-all duration-500 flex flex-col overflow-hidden cursor-pointer
+                  relative group bg-white rounded-[2.5rem] transition-all duration-500 flex flex-col overflow-hidden cursor-pointer h-full
                   ${isPop 
                     ? "shadow-2xl shadow-orange-500/20 border-2 border-orange-100 z-10 scale-105" 
                     : "shadow-xl border border-gray-100 hover:shadow-2xl hover:border-green-100"
@@ -145,40 +183,40 @@ export default function Plans() {
                   </div>
                 )}
 
-                <div className="p-8 md:p-10 flex-1 relative z-10">
+                <div className="p-6 md:p-8 flex-1 relative z-10 flex flex-col">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">
-                    <div className={`w-14 h-14 rounded-2xl bg-white shadow-sm border ${plan.border} flex items-center justify-center text-2xl ${plan.color}`}>
+                    <div className={`w-12 h-12 rounded-2xl bg-white shadow-sm border ${plan.border} flex items-center justify-center text-xl ${plan.color}`}>
                       <Icon />
                     </div>
                     <div className="text-right">
-                       <span className="block text-sm font-bold text-slate-400 uppercase tracking-wider">{plan.ideal}</span>
+                       <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">{plan.ideal}</span>
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-black text-slate-900 mb-2">{plan.name}</h3>
+                  <h3 className="text-xl font-black text-slate-900 mb-2">{plan.name}</h3>
                   
                   <div className="flex items-baseline gap-1 mb-6">
-                    <span className="text-lg font-bold text-slate-400">₹</span>
-                    <span className={`text-5xl font-black tracking-tighter ${isPop ? 'text-slate-900' : 'text-slate-800'}`}>
+                    {plan.id !== 'whole' && <span className="text-lg font-bold text-slate-400">₹</span>}
+                    <span className={`text-4xl font-black tracking-tighter ${isPop ? 'text-slate-900' : 'text-slate-800'}`}>
                       {plan.displayPrice}
                     </span>
-                    <span className="text-slate-400 font-medium text-sm">{plan.unit}</span>
+                    <span className="text-slate-400 font-medium text-xs">{plan.unit}</span>
                   </div>
 
                    {/* Quantity Badge */}
-                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/60 border border-slate-100 backdrop-blur-sm mb-8">
+                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/60 border border-slate-100 backdrop-blur-sm mb-6 w-fit">
                       <FaLeaf className="text-green-500 text-xs" />
                       <span className="text-slate-900 font-bold text-sm">{plan.qty}</span>
                       <span className="text-slate-400 text-xs">{plan.qtyLabel}</span>
                    </div>
 
                   {/* Features List */}
-                  <ul className="space-y-4 mb-8">
+                  <ul className="space-y-3 mb-8 flex-1">
                     {plan.points.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm font-medium text-slate-600">
-                        <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${isPop ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-600'}`}>
-                          <FaCheck size={10} />
+                      <li key={idx} className="flex items-start gap-2 text-xs font-medium text-slate-600 leading-relaxed">
+                        <div className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${isPop ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-600'}`}>
+                          <FaCheck size={8} />
                         </div>
                         {point}
                       </li>
@@ -188,7 +226,7 @@ export default function Plans() {
                   {/* Button */}
                   <button
                     className={`
-                      w-full py-4 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2
+                      w-full py-3 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2 text-sm
                       ${plan.btnColor}
                     `}
                   >
@@ -201,8 +239,52 @@ export default function Plans() {
         </div>
       </div>
 
+      {/* ================= NEW: LIVE MARKET RATES (UPDATED UI) ================= */}
+      <section className="py-12 bg-white border-y border-slate-100 mb-20 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 mb-8 text-center md:text-left flex flex-col md:flex-row items-center gap-4">
+           <div className="bg-red-50 text-red-600 p-3 rounded-xl">
+              <FaTag size={20} /> 
+           </div>
+           <div>
+              <h3 className="text-2xl font-black text-slate-900">Beat the Market Prices</h3>
+              <p className="text-slate-500 text-sm">Wholesale rates delivered directly to your doorstep.</p>
+           </div>
+        </div>
+
+        {/* Scrolling Ticker Container */}
+        <div className="relative w-full">
+           <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+           
+           <div className="flex gap-4 overflow-x-auto pb-6 px-6 snap-x hide-scrollbar">
+              {marketRates.map((item, index) => (
+                 <div key={index} className="snap-center shrink-0 w-48 p-4 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col items-center text-center hover:border-green-300 transition-colors">
+                    {/* <span className="text-4xl mb-2">{item.icon}</span> */}
+                    <h4 className="font-bold text-slate-800 text-sm mb-2">{item.name}</h4>
+                    
+                    {/* ... inside marketRates.map ... */}
+
+{/* UPDATED PRICE DISPLAY: STRIKE THROUGH vs OUR PRICE */}
+<div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-stone-100 shadow-sm">
+   <div className="flex flex-col items-end">
+      {/* CHANGED: Increased 'text-[10px]' to 'text-sm' and added 'font-bold' */}
+      <span className="text-sm text-red-500 line-through decoration-red-500 font-bold opacity-80">
+         ₹{item.marketPrice}
+      </span>
+   </div>
+   <div className="text-green-700 font-black text-xl leading-none">
+      ₹{item.ourPrice}
+   </div>
+</div>
+                    <span className="text-[10px] text-slate-400 font-medium mt-1">per {item.unit}</span>
+                 </div>
+              ))}
+           </div>
+        </div>
+      </section>
+
       {/* ================= TESTIMONIALS ================= */}
-      <div style={{marginTop:"-70px"}} className="bg-white py-20 border-t border-slate-100">
+      <div style={{marginTop:"-70px"}} className="bg-white py-20">
         <div className="max-w-6xl mx-auto px-6">
            <h3 className="text-center text-2xl font-bold text-slate-900 mb-12">Trusted by 500+ Neighbors</h3>
            <div className="grid md:grid-cols-3 gap-8">
@@ -219,7 +301,7 @@ export default function Plans() {
         </div>
       </div>
 
-      {/* ================= PREMIUM CONTACT SECTION (UPDATED) ================= */}
+      {/* ================= PREMIUM CONTACT SECTION ================= */}
       <div style={{marginTop:"-70px"}} className="py-24 px-4 sm:px-6 relative">
          <div className="max-w-4xl mx-auto relative">
             
@@ -346,16 +428,22 @@ export default function Plans() {
                     <div>
                        <span className="block text-xs text-slate-400 font-bold uppercase">Total Price</span>
                        <div className="flex items-baseline gap-1">
-                          <span className="text-3xl font-black text-slate-900">₹{selectedPlan.displayPrice}</span>
+                          <span className="text-3xl font-black text-slate-900">
+                            {selectedPlan.id !== 'whole' && "₹"}{selectedPlan.displayPrice}
+                          </span>
                           <span className="text-sm text-slate-500">{selectedPlan.unit}</span>
                        </div>
                     </div>
-                    <button
-                      onClick={() => navigate("/subscribe", { state: selectedPlan })}
+                    
+                    {/* --- UPDATED BUTTON: WHATSAPP REDIRECT --- */}
+                    <a
+                      href={`https://wa.me/919392814951?text=Hi, I am interested in the ${selectedPlan.name} plan. Can you please share more details?`}
+                      target="_blank"
+                      rel="noreferrer"
                       className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
                     >
-                      Subscribe Now <FaArrowRight />
-                    </button>
+                      Contact Now <FaWhatsapp size={22} />
+                    </a>
                  </div>
               </div>
 
