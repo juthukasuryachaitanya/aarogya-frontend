@@ -381,7 +381,7 @@ export default function Home() {
             </h1>
 
             <p className="text-base md:text-xl text-slate-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-              Premium fruit bowls. Hand-cut at 4 AM. Delivered by 8 AM.
+              Premium fruit bowls, Hand-cut, Delivered by 8:30 AM.
               <span className="block font-bold text-green-700 mt-1">Zero preservatives. 100% Nature.</span>
             </p>
 
