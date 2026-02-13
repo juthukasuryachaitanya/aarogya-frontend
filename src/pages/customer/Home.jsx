@@ -356,7 +356,7 @@ export default function Home() {
       <NoiseOverlay />
 
       {/* ================== HERO SECTION ================== */}
-      <section style={{marginTop:"-45px"}} className="relative pt-12 pb-20 md:pt-32 md:pb-20 overflow-hidden">
+      <section style={{marginTop:"-52px"}} className="relative pt-12 pb-20 md:pt-32 md:pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute -top-20 -right-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-green-200/50 rounded-full blur-[80px]" />
           <div className="absolute top-40 -left-20 w-[200px] md:w-[500px] h-[200px] md:h-[500px] bg-yellow-200/50 rounded-full blur-[80px]" />
