@@ -150,7 +150,7 @@ const LiveUpdateSection = () => {
   const currentOffer = offers[currentIndex];
 
   return (
-    <div className="sticky top-20 md:top-24 z-40 px-4 md:px-6 -mt-8 md:-mt-12 mb-12 pointer-events-none">
+    <div  className="relative z-30 px-4 md:px-6 -mt-8 md:-mt-12 mb-12 pointer-events-none">
       <motion.div 
         layout
         className={`max-w-5xl mx-auto bg-gradient-to-r ${currentOffer.gradient} rounded-3xl p-1 shadow-2xl ${currentOffer.shadow} transition-colors duration-500 pointer-events-auto backdrop-blur-xl relative`}
