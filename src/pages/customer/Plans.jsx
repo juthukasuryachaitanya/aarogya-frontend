@@ -4,9 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   FaPhoneAlt, FaWhatsapp, FaEnvelope, FaFacebookF, FaInstagram, FaYoutube,
   FaCheck, FaCrown, FaAppleAlt, FaSeedling, FaArrowRight, FaTimes, FaStar, 
-  FaLeaf, FaShoppingBasket, FaTag
+  FaLeaf, FaShoppingBasket, FaTag, FaInfoCircle, FaCalendarAlt, FaMoneyBillWave, FaBoxOpen
 } from "react-icons/fa";
-
 
 // --- MOCK DATA ---
 const plans = [
@@ -80,14 +79,14 @@ const plans = [
     details: "For those who compromise on nothing. Experience the luxury of daily exotic fruits, larger portions, and our widest variety of nutrient-dense options.",
     sampleMenu: ["Blueberries", "Dragon Fruit", "Imported Apple", "Kiwi", "Pomegranate"]
   },
-  // --- NEW PLAN: WHOLE FRUITS ---
+  // --- UPDATED WHOLESALE PLAN WITH POLICY DATA ---
   {
     id: "whole",
     name: "Whole Basket",
-    displayPrice: "Market",
+    displayPrice: "Wholesale",
     unit: "Rates",
-    qty: "Custom",
-    qtyLabel: "weight",
+    qty: "Min 2KG",
+    qtyLabel: "order",
     ideal: "For Families",
     icon: FaShoppingBasket,
     color: "text-blue-600",
@@ -96,25 +95,45 @@ const plans = [
     btnColor: "bg-blue-600 hover:bg-blue-700",
     points: [
       "Buy individual fruits by Kg/Dozen",
-      "No cutting, delivered whole",
+      "Beat Market Prices",
       "Wash & eat at your convenience",
-      "Weekly bulk delivery available"
+      "Weekly bulk delivery"
     ],
-    details: "Love cutting your own fruit? Order farm-fresh whole fruits by the kilo. Perfect for large families or storing fruits for the whole week.",
-    sampleMenu: ["1kg Shimla Apples", "1 Dozen Bananas", "2kg Papaya", "500g Grapes"]
+    details: "Love cutting your own fruit? Order farm-fresh whole fruits by the kilo at wholesale rates. Perfect for large families or storing fruits for the whole week.",
+    sampleMenu: ["1kg Shimla Apples", "1 Dozen Bananas", "2kg Papaya", "500g Grapes"],
+    // Policy Data for Modal
+    policy: {
+      minOrder: "2KG",
+      delivery: "Fixed: Sunday & Thursday",
+      paymentTerms: [
+        "50% Advance at Booking",
+        "Remaining 50% at Delivery",
+        "Order confirmed after advance payment"
+      ]
+    }
   }
 ];
 
-// --- UPDATED MARKET RATES DATA (With Comparison) ---
+// --- UPDATED MARKET RATES DATA (Sorted: Regular -> Premium) ---
 const marketRates = [
-  { name: "Shimla Apple", marketPrice: 240, ourPrice: 180, unit: "kg", icon: "🍎" },
-  { name: "Robusta Banana", marketPrice: 80, ourPrice: 60, unit: "doz", icon: "🍌" },
-  { name: "Papaya", marketPrice: 65, ourPrice: 45, unit: "kg", icon: "🍈" }, // Using Melon as Papaya placeholder
-  { name: "Pomegranate", marketPrice: 280, ourPrice: 220, unit: "kg", icon: "🔴" },
-  { name: "Kiwi (Imp)", marketPrice: 55, ourPrice: 40, unit: "pc", icon: "🥝" },
-  { name: "Dragon Fruit", marketPrice: 140, ourPrice: 110, unit: "pc", icon: "🐉" },
-  { name: "Watermelon", marketPrice: 40, ourPrice: 25, unit: "kg", icon: "🍉" },
-  { name: "Musk Melon", marketPrice: 60, ourPrice: 40, unit: "kg", icon: "🍈" },
+  // --- Regular / Daily Fruits ---
+  { name: "Pineapple", marketPrice: 90, ourPrice: 65, unit: "pc" },
+  { name: "Papaya", marketPrice: 60, ourPrice: 40, unit: "kg" },
+  { name: "Watermelon", marketPrice: 40, ourPrice: 25, unit: "kg" },
+  { name: "Guava", marketPrice: 80, ourPrice: 55, unit: "kg" },
+  { name: "Sapota", marketPrice: 80, ourPrice: 60, unit: "kg" },
+  { name: "Muskmelon", marketPrice: 50, ourPrice: 35, unit: "kg" },
+  { name: "Orange", marketPrice: 100, ourPrice: 75, unit: "kg" },
+  { name: "Black Grapes", marketPrice: 140, ourPrice: 110, unit: "kg" },
+  { name: "Green Grapes", marketPrice: 120, ourPrice: 90, unit: "kg" },
+  { name: "Apple", marketPrice: 240, ourPrice: 190, unit: "kg" },
+  { name: "Pomegranate", marketPrice: 280, ourPrice: 220, unit: "kg" },
+  
+  // --- Premium / Exotic Fruits ---
+  { name: "Pears", marketPrice: 220, ourPrice: 180, unit: "kg" },
+  { name: "Kiwi", marketPrice: 50, ourPrice: 35, unit: "pc" },
+  { name: "Dragon Fruit", marketPrice: 120, ourPrice: 90, unit: "pc" },
+  { name: "Avocado", marketPrice: 180, ourPrice: 140, unit: "pc" },
 ];
 
 const testimonials = [
@@ -239,7 +258,7 @@ export default function Plans() {
         </div>
       </div>
 
-      {/* ================= NEW: LIVE MARKET RATES (UPDATED UI) ================= */}
+      {/* ================= LIVE MARKET RATES (UPDATED NO ICON) ================= */}
       <section className="py-12 bg-white border-y border-slate-100 mb-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-8 text-center md:text-left flex flex-col md:flex-row items-center gap-4">
            <div className="bg-red-50 text-red-600 p-3 rounded-xl">
@@ -258,25 +277,23 @@ export default function Plans() {
            
            <div className="flex gap-4 overflow-x-auto pb-6 px-6 snap-x hide-scrollbar">
               {marketRates.map((item, index) => (
-                 <div key={index} className="snap-center shrink-0 w-48 p-4 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col items-center text-center hover:border-green-300 transition-colors">
-                    {/* <span className="text-4xl mb-2">{item.icon}</span> */}
-                    <h4 className="font-bold text-slate-800 text-sm mb-2">{item.name}</h4>
+                 <div key={index} className="snap-center shrink-0 w-48 p-6 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col items-center justify-center text-center hover:border-green-300 transition-colors">
                     
-                    {/* ... inside marketRates.map ... */}
-
-{/* UPDATED PRICE DISPLAY: STRIKE THROUGH vs OUR PRICE */}
-<div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-stone-100 shadow-sm">
-   <div className="flex flex-col items-end">
-      {/* CHANGED: Increased 'text-[10px]' to 'text-sm' and added 'font-bold' */}
-      <span className="text-sm text-red-500 line-through decoration-red-500 font-bold opacity-80">
-         ₹{item.marketPrice}
-      </span>
-   </div>
-   <div className="text-green-700 font-black text-xl leading-none">
-      ₹{item.ourPrice}
-   </div>
-</div>
-                    <span className="text-[10px] text-slate-400 font-medium mt-1">per {item.unit}</span>
+                    {/* Name (Larger since icon is gone) */}
+                    <h4 className="font-black text-slate-800 text-lg mb-3">{item.name}</h4>
+                    
+                    {/* Price Display */}
+                    <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl border border-stone-100 shadow-sm w-full justify-center">
+                       <div className="flex flex-col items-end">
+                          <span className="text-xs text-red-400 line-through decoration-red-400 font-bold">₹{item.marketPrice}</span>
+                       </div>
+                       <div className="text-2xl font-black text-green-700 leading-none">
+                          ₹{item.ourPrice}
+                       </div>
+                    </div>
+                    
+                    {/* Unit */}
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-3">per {item.unit}</span>
                  </div>
               ))}
            </div>
@@ -284,7 +301,7 @@ export default function Plans() {
       </section>
 
       {/* ================= TESTIMONIALS ================= */}
-      <div style={{marginTop:"-70px"}} className="bg-white py-20">
+      {/* <div style={{marginTop:"-70px"}} className="bg-white py-20">
         <div className="max-w-6xl mx-auto px-6">
            <h3 className="text-center text-2xl font-bold text-slate-900 mb-12">Trusted by 500+ Neighbors</h3>
            <div className="grid md:grid-cols-3 gap-8">
@@ -299,16 +316,12 @@ export default function Plans() {
               ))}
            </div>
         </div>
-      </div>
+      </div> */}
 
       {/* ================= PREMIUM CONTACT SECTION ================= */}
       <div style={{marginTop:"-70px"}} className="py-24 px-4 sm:px-6 relative">
          <div className="max-w-4xl mx-auto relative">
-            
-            {/* Main Card */}
             <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 text-center relative overflow-hidden border border-slate-100">
-               
-               {/* Decorative Blobs */}
                <div className="absolute top-0 left-0 w-64 h-64 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 -translate-x-1/2 -translate-y-1/2"></div>
                <div className="absolute bottom-0 right-0 w-64 h-64 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 translate-x-1/2 translate-y-1/2"></div>
 
@@ -316,7 +329,6 @@ export default function Plans() {
                   <div className="inline-block p-3 rounded-2xl bg-slate-50 mb-6">
                      <FaPhoneAlt className="text-2xl text-slate-700" />
                   </div>
-                  
                   <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">
                      Have questions before subscribing?
                   </h2>
@@ -325,18 +337,10 @@ export default function Plans() {
                   </p>
 
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
-                     <a 
-                        href="https://wa.me/9392814951" 
-                        target="_blank" 
-                        rel="noreferrer"
-                        className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-green-200 transition-all flex items-center justify-center gap-3"
-                     >
+                     <a href="https://wa.me/9392814951" target="_blank" rel="noreferrer" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-green-200 transition-all flex items-center justify-center gap-3">
                         <FaWhatsapp size={24} /> Chat on WhatsApp
                      </a>
-                     <a 
-                        href="tel:+919392814951" 
-                        className="bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-100 px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-3"
-                     >
+                     <a href="tel:+919392814951" className="bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-100 px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-3">
                         <FaPhoneAlt size={18} className="text-slate-400" /> +91 9392 814 951
                      </a>
                   </div>
@@ -350,13 +354,7 @@ export default function Plans() {
                            { icon: FaYoutube, link: "https://www.youtube.com/@aarogyaharvest", color: "text-red-600 bg-red-50" },
                            { icon: FaEnvelope, link: "mailto:aagrogyaharvest@gmail.com", color: "text-orange-600 bg-orange-50" },
                         ].map((social, i) => (
-                           <a 
-                              key={i} 
-                              href={social.link} 
-                              target="_blank"
-                              rel="noreferrer"
-                              className={`w-12 h-12 rounded-full flex items-center justify-center transition-transform hover:-translate-y-1 ${social.color}`}
-                           >
+                           <a key={i} href={social.link} target="_blank" rel="noreferrer" className={`w-12 h-12 rounded-full flex items-center justify-center transition-transform hover:-translate-y-1 ${social.color}`}>
                               <social.icon size={20} />
                            </a>
                         ))}
@@ -364,11 +362,10 @@ export default function Plans() {
                   </div>
                </div>
             </div>
-
          </div>
       </div>
 
-      {/* ================= PLAN DETAILS MODAL ================= */}
+      {/* ================= PLAN DETAILS MODAL (UPDATED) ================= */}
       <AnimatePresence>
         {selectedPlan && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -384,7 +381,7 @@ export default function Plans() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden"
+              className="relative bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[2rem] shadow-2xl custom-scrollbar"
             >
               {/* Modal Header */}
               <div className={`p-8 bg-gradient-to-r ${selectedPlan.gradient} relative overflow-hidden`}>
@@ -413,15 +410,51 @@ export default function Plans() {
                     <p className="text-slate-600 leading-relaxed">{selectedPlan.details}</p>
                  </div>
 
+                 {/* --- WHOLESALE POLICY SECTION (Only shows for 'whole' plan) --- */}
+                 {selectedPlan.policy && (
+                    <div className="mb-8 p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                       <h4 className="text-sm font-bold text-blue-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+                          <FaInfoCircle /> Aarogya Wholesale Policy
+                       </h4>
+                       <div className="space-y-4">
+                          <div className="flex items-start gap-4">
+                             <div className="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center shadow-sm shrink-0"><FaBoxOpen /></div>
+                             <div>
+                                <span className="block text-xs font-bold text-blue-400 uppercase">Minimum Order</span>
+                                <span className="font-bold text-slate-800">{selectedPlan.policy.minOrder}</span>
+                             </div>
+                          </div>
+                          <div className="flex items-start gap-4">
+                             <div className="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center shadow-sm shrink-0"><FaCalendarAlt /></div>
+                             <div>
+                                <span className="block text-xs font-bold text-blue-400 uppercase">Delivery Days</span>
+                                <span className="font-bold text-slate-800">{selectedPlan.policy.delivery}</span>
+                             </div>
+                          </div>
+                          <div className="flex items-start gap-4">
+                             <div className="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center shadow-sm shrink-0"><FaMoneyBillWave /></div>
+                             <div>
+                                <span className="block text-xs font-bold text-blue-400 uppercase">Payment Policy</span>
+                                <ul className="text-sm text-slate-700 space-y-1 mt-1">
+                                   {selectedPlan.policy.paymentTerms.map((term, idx) => (
+                                      <li key={idx} className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-400 rounded-full"/> {term}</li>
+                                   ))}
+                                </ul>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 )}
+
                  <div className="mb-8">
-                    <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">What's in the bowl? (Sample)</h4>
-                    <div className="flex flex-wrap gap-2">
+                    {/* <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">View Aarogya fruits rates in below section</h4> */}
+                    {/* <div className="flex flex-wrap gap-2">
                        {selectedPlan.sampleMenu.map((item, i) => (
                           <span key={i} className="px-3 py-1.5 bg-stone-100 text-slate-700 rounded-lg text-sm font-medium border border-stone-200">
                              {item}
                           </span>
                        ))}
-                    </div>
+                    </div> */}
                  </div>
 
                  <div className="flex items-center justify-between pt-6 border-t border-slate-100">
@@ -435,7 +468,6 @@ export default function Plans() {
                        </div>
                     </div>
                     
-                    {/* --- UPDATED BUTTON: WHATSAPP REDIRECT --- */}
                     <a
                       href={`https://wa.me/919392814951?text=Hi, I am interested in the ${selectedPlan.name} plan. Can you please share more details?`}
                       target="_blank"
