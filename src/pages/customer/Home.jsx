@@ -13,7 +13,6 @@ import {
   FaSun,
   FaCrown,
   FaUserFriends,
-  FaTint,
   FaWhatsapp,
   FaPhoneAlt,
   FaInstagram,
@@ -26,9 +25,7 @@ import {
   FaYoutube,
   FaEnvelope,
   FaHome,
-  FaRoute,
   FaMapMarkerAlt,
-  FaGift,
   FaBolt,
   FaCarrot,
   FaAppleAlt,
@@ -40,28 +37,114 @@ import {
   FaTag
 } from "react-icons/fa";
 
-// --- DATA: MARKET RATES (For Wholesale Modal) ---
-// --- UPDATED MARKET RATES DATA ---
-// --- UPDATED MARKET RATES DATA (Sorted: Regular -> Premium) ---
+
+// --- UPDATED MARKET RATES DATA (Images + Sorted) ---
 const marketRates = [
-  // --- Regular / Daily Fruits ---
-  { name: "Apple", marketPrice: 240, ourPrice: 190, unit: "kg" },
-  { name: "Pomegranate", marketPrice: 280, ourPrice: 220, unit: "kg" },
-  { name: "Pineapple", marketPrice: 90, ourPrice: 65, unit: "pc" },
-  { name: "Papaya", marketPrice: 60, ourPrice: 40, unit: "kg" },
-  { name: "Watermelon", marketPrice: 40, ourPrice: 25, unit: "kg" },
-  { name: "Guava", marketPrice: 80, ourPrice: 55, unit: "kg" },
-  { name: "Sapota", marketPrice: 80, ourPrice: 60, unit: "kg" },
-  { name: "Muskmelon", marketPrice: 50, ourPrice: 35, unit: "kg" },
-  { name: "Orange", marketPrice: 100, ourPrice: 75, unit: "kg" },
-  { name: "Black Grapes", marketPrice: 140, ourPrice: 110, unit: "kg" },
-  { name: "Green Grapes", marketPrice: 120, ourPrice: 90, unit: "kg" },
-  
-  // --- Premium / Exotic Fruits ---
-  { name: "Pears", marketPrice: 220, ourPrice: 180, unit: "kg" },
-  { name: "Kiwi", marketPrice: 50, ourPrice: 35, unit: "pc" },
-  { name: "Dragon Fruit", marketPrice: 120, ourPrice: 90, unit: "pc" },
-  { name: "Avocado", marketPrice: 180, ourPrice: 140, unit: "pc" },
+  { 
+    name: "Imported Apple", 
+    marketPrice: 300, 
+    ourPrice: 230, 
+    unit: "kg", 
+    img: "/assets/apple.png" 
+  },
+  { 
+    name: "Pomegranate", 
+    marketPrice: 300, 
+    ourPrice: 230, 
+    unit: "kg", 
+    img: "/assets/pomegranate.png"
+  },
+  { 
+    name: "Pineapple(depends on size)", 
+    marketPrice: 80, 
+    ourPrice: 60, 
+    unit: "pc", 
+    img: "/assets/pineapple.png"
+  },
+  { 
+    name: "Papaya", 
+    marketPrice: 60, 
+    ourPrice: 40, 
+    unit: "kg", 
+    img: "/assets/papaya.png"
+  },
+  { 
+    name: "Watermelon", 
+    marketPrice: 50, 
+    ourPrice: 35, 
+    unit: "kg", 
+    img: "/assets/watermelon.png"
+  },
+  { 
+    name: "Guava", 
+    marketPrice: 120, 
+    ourPrice: 80, 
+    unit: "kg", 
+    img: "/assets/guava.png"
+  },
+  { 
+    name: "Sapota", 
+    marketPrice: 70, 
+    ourPrice: 50, 
+    unit: "kg", 
+    img: "/assets/sapota.png"
+  },
+  { 
+    name: "Muskmelon", 
+    marketPrice: 50, 
+    ourPrice: 35, 
+    unit: "kg", 
+    img: "/assets/muskmelon.png"
+  },
+  { 
+    name: "Orange", 
+    marketPrice: 100, 
+    ourPrice: 75, 
+    unit: "kg", 
+    img: "/assets/orange.png"
+  },
+  { 
+    name: "Black Grapes", 
+    marketPrice: 220, 
+    ourPrice: 170, 
+    unit: "kg", 
+    img: "/assets/grapes-black.png"
+  },
+  { 
+    name: "Green Grapes", 
+    marketPrice: 160, 
+    ourPrice: 120, 
+    unit: "kg", 
+    img: "/assets/grapes-green.png"
+  },
+  { 
+    name: "Pears", 
+    marketPrice: 450, 
+    ourPrice: 350, 
+    unit: "kg", 
+    img: "/assets/pears.png"
+  },
+  { 
+    name: "Kiwi(depends on size)", 
+    marketPrice: 50, 
+    ourPrice: 30, 
+    unit: "pc", 
+    img: "/assets/kiwi.png"
+  },
+  { 
+    name: "Dragon Fruit(depends on size)", 
+    marketPrice: 130, 
+    ourPrice: 100, 
+    unit: "pc", 
+    img: "/assets/dragon-fruit.png"
+  },
+  { 
+    name: "Avocado(depends on size)", 
+    marketPrice: 180, 
+    ourPrice: 140, 
+    unit: "pc", 
+    img: "/assets/avacado.png"
+  },
 ];
 
 // --- COMPONENTS ---
@@ -126,8 +209,8 @@ const LiveUpdateSection = ({ onAction }) => {
     {
       id: "wholesale",
       title: "New: Aarogya Wholesale",
-      subtitle: "Buy whole fruits by the Kg at wholesale rates.",
-      highlight: "Beat Market Prices",
+      subtitle: "Buy whole fruits at prices lower than the market.",
+      highlight: "Minimum 20% lower",
       icon: <FaShoppingBasket />,
       iconBg: "bg-blue-100 text-blue-600",
       highlightColor: "text-blue-600",
@@ -164,7 +247,7 @@ const LiveUpdateSection = ({ onAction }) => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % offers.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
   }, [offers.length]);
 
@@ -179,7 +262,6 @@ const LiveUpdateSection = ({ onAction }) => {
   const currentOffer = offers[currentIndex];
 
   return (
-    // REDUCED MARGIN BOTTOM: Changed mb-12 to mb-8
     <div className="relative z-30 px-4 md:px-6 -mt-8 md:-mt-12 mb-8">
       <motion.div 
         layout
@@ -261,14 +343,14 @@ const AnimatedMenu = () => {
     {
       title: "Seasonal Specials",
       icon: <FaSun />, 
-      items: ["Mango", "Jackfruit", "Custard Apple (Sitaphal)", "Ice Apple (Tadgola)", "Sapota", "Mosambi"],
+      items: ["Mango", "Jackfruit", "Custard Apple (Sitaphal)", "Ice Apple (Tadgola)", "Sapota", "Mosambi","Grapes-Black(seedless","Grapes-Green"],
       theme: "bg-yellow-50 border-yellow-100 text-yellow-800",
       tagTheme: "bg-white text-yellow-600 border-yellow-200"
     },
     {
       title: "Regular Fruits",
       icon: <FaAppleAlt />,
-      items: ["Apple","Pomegranate", "Pineapple", "Grapes", "Muskmelon", "Orange", "Guava", "Papaya", "Watermelon","Banana"],
+      items: ["Apple","Pomegranate", "Pineapple", "Muskmelon", "Orange", "Guava", "Papaya", "Watermelon","Banana"],
       theme: "bg-red-50 border-red-100 text-red-800",
       tagTheme: "bg-white text-red-600 border-red-200"
     },
@@ -329,7 +411,7 @@ const AnimatedMenu = () => {
   );
 };
 
-// 6. FRESHNESS TIMELINE COMPONENT (Refined Alignment)
+// 6. FRESHNESS TIMELINE COMPONENT
 const FreshnessTimeline = () => {
   const steps = [
     { time: "Yesterday, 4:00 PM", title: "Harvested with Care", desc: "Fruits picked directly from partner farms only when fully ripe.", icon: <FaTractor />, color: "bg-orange-100 text-orange-600 border-orange-200" },
@@ -365,7 +447,6 @@ const FreshnessTimeline = () => {
               >
                 
                 {/* --- LEFT SIDE CONTENT (Desktop) --- */}
-                {/* Applied md:-ml-2.5 to move it left by ~10px */}
                 <div style={{marginLeft:"8px"}} className={`md:w-1/2 flex ${i % 2 !== 0 ? "md:justify-start" : "md:justify-end"} pl-24 md:pl-0 md:pr-16 md:-ml-2.5`}>
                    <span className="inline-block py-1 px-3 rounded-full bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider">
                      {step.time}
@@ -380,7 +461,6 @@ const FreshnessTimeline = () => {
                 </div>
 
                 {/* --- RIGHT SIDE CONTENT (Desktop) --- */}
-                {/* Maintained pl-24 for mobile, used md:pl-16 for desktop gap */}
                 <div className="md:w-1/2 w-full pl-24 md:pl-16 md:pr-0">
                   <div className="bg-stone-50 p-6 rounded-2xl border border-stone-100 hover:border-green-200 transition-colors shadow-sm">
                     <h3 className="text-xl font-bold text-slate-900">{step.title}</h3>
@@ -400,30 +480,29 @@ const FreshnessTimeline = () => {
 // 7. LOCATION SECTION
 const LocationSection = () => {
   return (
-    // REDUCED PADDING: Changed py-16 md:py-24 to py-12 md:py-16
     <section className="py-12 md:py-16 bg-white relative overflow-hidden border-t border-slate-100">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="bg-green-900 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl flex flex-col md:flex-row items-center gap-12">
            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
            
            <div className="relative z-10 flex-1 text-center md:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-800 border border-green-700 text-green-300 text-xs font-bold uppercase tracking-wider mb-6">
-                 <FaMapMarkerAlt /> Our Headquarters
-              </div>
-              <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight">
-                 Rooted in <br/> <span className="text-lime-400">Bachupally, Hyderabad.</span>
-              </h2>
-              <p className="text-green-200 text-lg mb-8 max-w-md">
-                 Our central processing unit ensures fresh delivery across the city, starting right from the heart of Bachupally.
-              </p>
-              <a 
-                href="https://share.google/stilt8sa5ev9pJsGT" 
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-3 bg-white text-green-900 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-lime-50 transition-all"
-              >
-                 <FaLocationArrow /> Get Directions
-              </a>
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-800 border border-green-700 text-green-300 text-xs font-bold uppercase tracking-wider mb-6">
+                <FaMapMarkerAlt /> Our Headquarters
+             </div>
+             <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight">
+                Rooted in <br/> <span className="text-lime-400">Bachupally, Hyderabad.</span>
+             </h2>
+             <p className="text-green-200 text-lg mb-8 max-w-md">
+                Our central processing unit ensures fresh delivery across the city, starting right from the heart of Bachupally.
+             </p>
+             <a 
+               href="https://share.google/stilt8sa5ev9pJsGT" 
+               target="_blank"
+               rel="noreferrer"
+               className="inline-flex items-center gap-3 bg-white text-green-900 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-lime-50 transition-all"
+             >
+                <FaLocationArrow /> Get Directions
+             </a>
            </div>
 
            <div className="relative w-full md:w-1/2 h-64 md:h-80 bg-green-800/50 rounded-3xl border border-green-700/50 backdrop-blur-sm overflow-hidden flex items-center justify-center group cursor-pointer">
@@ -510,14 +589,14 @@ export default function Home() {
             </div>
           </motion.div>
           <motion.div style={{ y: yHero }} className="relative perspective-1000 order-1 lg:order-2 w-full max-w-sm lg:max-w-full mx-auto">
-             <TiltCard className="w-full aspect-square relative">
+              <TiltCard className="w-full aspect-square relative">
                 <div className="absolute inset-0 bg-gradient-to-tr from-green-100 to-yellow-50 rounded-[2rem] md:rounded-[3rem] -rotate-6 shadow-2xl border border-white/50" />
                 <div className="absolute inset-3 md:inset-4 bg-white rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-inner border-4 border-white/50">
                    {images.map((img, i) => (
                       <motion.img key={img} src={img} initial={{ opacity: 0 }} animate={{ opacity: activeImg === i ? 1 : 0, scale: activeImg === i ? 1 : 1.1 }} transition={{ duration: 0.8 }} className="absolute inset-0 w-full h-full object-cover" />
                    ))}
                 </div>
-             </TiltCard>
+              </TiltCard>
           </motion.div>
         </div>
       </section>
@@ -738,7 +817,7 @@ export default function Home() {
         </motion.div>
       )}
 
-      {/* ================== RATES MODAL (NEW POPUP) ================== */}
+      {/* ================== RATES MODAL (UPDATED WITH CARD UI) ================== */}
       <AnimatePresence>
         {showRatesModal && (
           <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
@@ -754,10 +833,10 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative bg-white w-full max-w-lg rounded-[2rem] shadow-2xl overflow-hidden"
+              className="relative bg-white w-full max-w-2xl max-h-[90vh] rounded-[2rem] shadow-2xl overflow-hidden flex flex-col"
             >
               {/* Modal Header */}
-              <div className="bg-blue-600 p-6 text-white relative">
+              <div className="bg-blue-600 p-6 text-white relative shrink-0">
                 <button 
                   onClick={() => setShowRatesModal(false)}
                   className="absolute top-6 right-6 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors"
@@ -773,29 +852,55 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Modal List */}
-              <div className="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
-                 <div className="space-y-4">
-                    {marketRates.map((item, index) => (
-                       <div key={index} className="flex items-center justify-between p-4 bg-stone-50 rounded-2xl border border-stone-100">
-                          <div className="flex items-center gap-4">
-                             {/* <span className="text-3xl">{item.icon}</span> */}
-                             <div>
-                                <h4 className="font-bold text-slate-800">{item.name}</h4>
-                                <span className="text-xs text-slate-400 font-bold uppercase">Per {item.unit}</span>
+              {/* Modal List (GRID LAYOUT) */}
+              <div className="p-6 overflow-y-auto custom-scrollbar bg-slate-50">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                     {marketRates.map((item, index) => {
+                        const discount = Math.round(((item.marketPrice - item.ourPrice) / item.marketPrice) * 100);
+                        return (
+                          <div key={index} className="relative bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center justify-between text-center overflow-hidden hover:shadow-md transition-shadow">
+                             {/* Discount Badge */}
+                             <div className="absolute top-0 right-0 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-xl z-10">
+                               -{discount}%
                              </div>
+
+                             {/* Image */}
+                             <div className="w-16 h-16 mb-2 flex items-center justify-center p-1">
+                                <img 
+                                  src={item.img} 
+                                  alt={item.name} 
+                                  className="w-full h-full object-contain"
+                                  onError={(e) => {
+                                     e.target.onerror = null; 
+                                     e.target.src = "https://cdn-icons-png.flaticon.com/512/3081/3081986.png"; 
+                                  }}
+                                />
+                             </div>
+
+                             {/* Info */}
+                             <h4 className="font-bold text-slate-800 text-sm mb-2 h-8 flex items-center justify-center leading-tight">
+                                {item.name}
+                             </h4>
+
+                             {/* Price Block */}
+                             <div className="w-full bg-green-50 rounded-xl p-2 flex justify-center items-center gap-2 border border-green-100">
+  <span className="text-xs text-gray-400 line-through font-semibold">
+    ₹{item.marketPrice}
+  </span>
+  <span className="text-sm font-black text-green-700">
+    ₹{item.ourPrice}
+  </span>
+</div>
+
+                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1">per {item.unit}</span>
                           </div>
-                          <div className="text-right">
-                             <div className="text-xs text-red-400 line-through decoration-red-400 font-bold">₹{item.marketPrice}</div>
-                             <div className="text-lg font-black text-green-600">₹{item.ourPrice}</div>
-                          </div>
-                       </div>
-                    ))}
-                 </div>
+                        );
+                     })}
+                  </div>
               </div>
 
               {/* Modal Footer */}
-              <div className="p-6 border-t border-slate-100 bg-slate-50 text-center">
+              <div className="p-6 border-t border-slate-100 bg-white text-center shrink-0">
                  <p className="text-slate-400 text-xs mb-4">Prices update daily based on Mandi rates.</p>
                  <button 
                     onClick={() => {

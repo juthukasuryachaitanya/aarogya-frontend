@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lordicon/react": "^1.11.0",
     "axios": "^1.13.4",
     "bootstrap": "^5.3.8",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.0",
+    "lottie-web": "^5.13.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hot-toast": "^2.6.0",
