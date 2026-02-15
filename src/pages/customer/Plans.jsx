@@ -247,52 +247,8 @@ export default function Plans() {
         </motion.div>
       </div>
 
-      {/* ================= PRICING CARDS ================= */}
-      <div style={{marginTop:"-40px"}} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
-          {plans.map((plan) => {
-            const Icon = plan.icon;
-            const isPop = plan.popular;
-            return (
-              <motion.div
-                key={plan.id}
-                whileHover={{ y: -10 }}
-                className={`relative group bg-white rounded-[2.5rem] transition-all duration-500 flex flex-col overflow-hidden cursor-pointer h-full ${isPop ? "shadow-2xl shadow-orange-500/20 border-2 border-orange-100 z-10 scale-105" : "shadow-xl border border-gray-100 hover:shadow-2xl hover:border-green-100"}`}
-                onClick={() => setSelectedPlan(plan)}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-b ${plan.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
-                {isPop && <div className="absolute top-0 right-0 bg-orange-500 text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-2xl z-20 tracking-wider">MOST POPULAR</div>}
-                <div className="p-6 md:p-8 flex-1 relative z-10 flex flex-col">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className={`w-12 h-12 rounded-2xl bg-white shadow-sm border ${plan.border} flex items-center justify-center text-xl ${plan.color}`}><Icon /></div>
-                    <div className="text-right"><span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">{plan.ideal}</span></div>
-                  </div>
-                  <h3 className="text-xl font-black text-slate-900 mb-2">{plan.name}</h3>
-                  <div className="flex items-baseline gap-1 mb-6">
-                    {plan.id !== 'whole' && <span className="text-lg font-bold text-slate-400">₹</span>}
-                    <span className={`text-4xl font-black tracking-tighter ${isPop ? 'text-slate-900' : 'text-slate-800'}`}>{plan.displayPrice}</span>
-                    <span className="text-slate-400 font-medium text-xs">{plan.unit}</span>
-                  </div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/60 border border-slate-100 backdrop-blur-sm mb-6 w-fit">
-                      <FaLeaf className="text-green-500 text-xs" /><span className="text-slate-900 font-bold text-sm">{plan.qty}</span><span className="text-slate-400 text-xs">{plan.qtyLabel}</span>
-                  </div>
-                  <ul className="space-y-3 mb-8 flex-1">
-                    {plan.points.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-xs font-medium text-slate-600 leading-relaxed">
-                        <div className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${isPop ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-600'}`}><FaCheck size={8} /></div>{point}
-                      </li>
-                    ))}
-                  </ul>
-                  <button className={`w-full py-3 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2 text-sm ${plan.btnColor}`}>View Details</button>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-
       {/* ================= LIVE MARKET RATES ================= */}
-      <section className="py-12 bg-white border-y border-slate-100 mb-20 overflow-hidden">
+      <section style={{marginTop:"-70px"}} className="py-12 bg-white border-y border-slate-100 mb-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-8 text-center md:text-left flex flex-col md:flex-row items-center gap-6">
             <div className="relative">
               <div className="absolute inset-0 bg-red-100 rounded-2xl blur-lg opacity-60 animate-pulse"></div>
@@ -347,6 +303,53 @@ export default function Plans() {
             </div>
         </div>
       </section>
+
+
+      {/* ================= PRICING CARDS ================= */}
+      <div style={{marginTop:"-40px"}} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
+          {plans.map((plan) => {
+            const Icon = plan.icon;
+            const isPop = plan.popular;
+            return (
+              <motion.div
+                key={plan.id}
+                whileHover={{ y: -10 }}
+                className={`relative group bg-white rounded-[2.5rem] transition-all duration-500 flex flex-col overflow-hidden cursor-pointer h-full ${isPop ? "shadow-2xl shadow-orange-500/20 border-2 border-orange-100 z-10 scale-105" : "shadow-xl border border-gray-100 hover:shadow-2xl hover:border-green-100"}`}
+                onClick={() => setSelectedPlan(plan)}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-b ${plan.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+                {isPop && <div className="absolute top-0 right-0 bg-orange-500 text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-2xl z-20 tracking-wider">MOST POPULAR</div>}
+                <div className="p-6 md:p-8 flex-1 relative z-10 flex flex-col">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className={`w-12 h-12 rounded-2xl bg-white shadow-sm border ${plan.border} flex items-center justify-center text-xl ${plan.color}`}><Icon /></div>
+                    <div className="text-right"><span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">{plan.ideal}</span></div>
+                  </div>
+                  <h3 className="text-xl font-black text-slate-900 mb-2">{plan.name}</h3>
+                  <div className="flex items-baseline gap-1 mb-6">
+                    {plan.id !== 'whole' && <span className="text-lg font-bold text-slate-400">₹</span>}
+                    <span className={`text-4xl font-black tracking-tighter ${isPop ? 'text-slate-900' : 'text-slate-800'}`}>{plan.displayPrice}</span>
+                    <span className="text-slate-400 font-medium text-xs">{plan.unit}</span>
+                  </div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/60 border border-slate-100 backdrop-blur-sm mb-6 w-fit">
+                      <FaLeaf className="text-green-500 text-xs" /><span className="text-slate-900 font-bold text-sm">{plan.qty}</span><span className="text-slate-400 text-xs">{plan.qtyLabel}</span>
+                  </div>
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {plan.points.map((point, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs font-medium text-slate-600 leading-relaxed">
+                        <div className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${isPop ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-600'}`}><FaCheck size={8} /></div>{point}
+                      </li>
+                    ))}
+                  </ul>
+                  <button className={`w-full py-3 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2 text-sm ${plan.btnColor}`}>View Details</button>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+
+      
 
       {/* ================= TESTIMONIALS ================= */}
       {/* <div style={{marginTop:"-70px"}} className="bg-white py-20">
